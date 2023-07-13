@@ -7,7 +7,8 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-// Should be stored in a DB or cache, but for simplicity's sake it's stored here.
+// Should be stored in a DB or cache, but for
+// simplicity's sake, it's stored here.
 let refreshTokens = [];
 
 app.post('/token', (req, res) => {
@@ -28,18 +29,17 @@ app.post('/token', (req, res) => {
     });
 });
 
+
 app.post("/login", (req, res) => {
 
     // authenticate user credentials against DB here...
 
     const username = req.body.username
-
     const user = {
         username: username,
         scopes: "",
         otherStuff: "",
     }
-
     const accessToken = generateAccessToken(user);
     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
     refreshTokens.push(refreshToken);
@@ -47,13 +47,16 @@ app.post("/login", (req, res) => {
     res.json({ accessToken: accessToken, refreshToken: refreshToken });
 });
 
+
 app.delete('/logout', (req, res) => {
     refreshTokens = refreshTokens.filter(token => token !== req.body.token);
     res.sendStatus(204);
 });
 
+
 function generateAccessToken(user) {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s'});
 }
+
 
 app.listen(4000);
