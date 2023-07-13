@@ -1,10 +1,54 @@
+### Basic GET Request
+
 GET http://localhost:3000/posts
 
-###
+### POST request for login to generate JWT
 
 POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "username": "Omar"
+  "username": "Mahmoud"
+}
+
+### GET request using the JWT generated from logging in with the POST request above
+
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1haG1vdWQiLCJzY29wZXMiOiIiLCJvdGhlclN0dWZmIjoiIiwiaWF0IjoxNjg5MjEzNjc5fQ.Zm-Cpx3JR43-j6TRgzNQ-2cKNsdZJl2VlW_S-vIYVUk
+
+### GET request using the same JWT on another server. Works because both servers verify with the same Token Secret
+
+GET http://localhost:4000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1haG1vdWQiLCJzY29wZXMiOiIiLCJvdGhlclN0dWZmIjoiIiwiaWF0IjoxNjg5MjEzNjc5fQ.Zm-Cpx3JR43-j6TRgzNQ-2cKNsdZJl2VlW_S-vIYVUk
+
+###
+
+POST http://localhost:4000/token
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1haG1vdWQiLCJzY29wZXMiOiIiLCJvdGhlclN0dWZmIjoiIiwiaWF0IjoxNjg5MjE4ODU0fQ.ti8AGf0_qKdbs1ULvyPuY_S2c0-2mEd2-RaQYOMQKXo"
+}
+
+###
+
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+  "username": "Mahmoud"
+}
+
+###
+
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1haG1vdWQiLCJzY29wZXMiOiIiLCJvdGhlclN0dWZmIjoiIiwiaWF0IjoxNjg5MjE4OTM4LCJleHAiOjE2ODkyMTg5NTN9.EIZD9jPGUu11wUBKM2-4aZVhabvfV_2nyJCpCLxQLNI
+
+###
+
+DELETE http://localhost:4000/logout
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1haG1vdWQiLCJzY29wZXMiOiIiLCJvdGhlclN0dWZmIjoiIiwiaWF0IjoxNjg5MjE4ODU0fQ.ti8AGf0_qKdbs1ULvyPuY_S2c0-2mEd2-RaQYOMQKXo"
 }
